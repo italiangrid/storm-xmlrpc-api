@@ -81,6 +81,11 @@ public class BackendApi
     {
         return PingExecutor.execute(storm, userDN, userFQANS);
     }
+
+    public PingOutputData ping() throws ApiException, IllegalArgumentException
+    {
+        return PingExecutor.execute(storm);
+    }
     
     public SurlArrayRequestOutputData putDone(String userDN, List<String> userFQANS, List<String> surls,
             TRequestToken requestToken) throws ApiException
