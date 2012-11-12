@@ -52,6 +52,25 @@ public class PingExecutor
         return doIt(storm, parameters);
     }
 
+    public static PingOutputData execute(synchcall storm, String userDN) throws ApiException
+    {
+        if (storm == null || userDN == null)
+        {
+            throw new IllegalArgumentException("Unable to call ping command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = PingEncoder.getInstance().encode(userDN);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode Ping parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     public static PingOutputData execute(synchcall storm) throws ApiException
     {
         if (storm == null)

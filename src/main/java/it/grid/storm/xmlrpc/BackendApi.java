@@ -82,6 +82,11 @@ public class BackendApi
         return PingExecutor.execute(storm, userDN, userFQANS);
     }
 
+    public PingOutputData ping(String userDN) throws ApiException, IllegalArgumentException
+    {
+        return PingExecutor.execute(storm, userDN);
+    }
+    
     public PingOutputData ping() throws ApiException, IllegalArgumentException
     {
         return PingExecutor.execute(storm);
@@ -93,9 +98,31 @@ public class BackendApi
         return PutDoneExecutor.execute(storm, userDN, userFQANS, surls, requestToken);
     }
 
+    public SurlArrayRequestOutputData putDone(String userDN, List<String> surls,
+            TRequestToken requestToken) throws ApiException
+    {
+        return PutDoneExecutor.execute(storm, userDN, surls, requestToken);
+    }
+    
+    public SurlArrayRequestOutputData putDone(List<String> surls,
+            TRequestToken requestToken) throws ApiException
+    {
+        return PutDoneExecutor.execute(storm, surls, requestToken);
+    }
+    
     public LsOutputData ls(String userDN, List<String> userFQANS, List<String> surls) throws ApiException
     {
         return LsExecutor.execute(storm, userDN, userFQANS, surls);
+    }
+    
+    public LsOutputData ls(String userDN, List<String> surls) throws ApiException
+    {
+        return LsExecutor.execute(storm, userDN, surls);
+    }
+    
+    public LsOutputData ls(List<String> surls) throws ApiException
+    {
+        return LsExecutor.execute(storm, surls);
     }
 
     /**
@@ -110,10 +137,31 @@ public class BackendApi
         return LsExecutor.execute(storm, userDN, userFQANS, surls, recursion);
     }
     
+    public LsOutputData ls(String userDN, List<String> surls, RecursionLevel recursion)
+            throws ApiException
+    {
+        return LsExecutor.execute(storm, userDN, surls, recursion);
+    }
+    
+    public LsOutputData ls(List<String> surls, RecursionLevel recursion)
+            throws ApiException
+    {
+        return LsExecutor.execute(storm, surls, recursion);
+    }
     
     public LsOutputData ls(String userDN, List<String> userFQANS, List<String> surls, Integer count) throws ApiException
     {
         return LsExecutor.execute(storm, userDN, userFQANS, surls, count);
+    }
+
+    public LsOutputData ls(String userDN, List<String> surls, Integer count) throws ApiException
+    {
+        return LsExecutor.execute(storm, userDN, surls, count);
+    }
+    
+    public LsOutputData ls(List<String> surls, Integer count) throws ApiException
+    {
+        return LsExecutor.execute(storm, surls, count);
     }
     
     public LsOutputData ls(String userDN, List<String> userFQANS,
@@ -121,10 +169,31 @@ public class BackendApi
     {
         return LsExecutor.execute(storm, userDN, userFQANS, surls, recursion, count);
     }
+    
+    public LsOutputData ls(String userDN, 
+            List<String> surls, RecursionLevel recursion, Integer count) throws ApiException
+    {
+        return LsExecutor.execute(storm, userDN, surls, recursion, count);
+    }
+    
+    public LsOutputData ls(List<String> surls, RecursionLevel recursion, Integer count) throws ApiException
+    {
+        return LsExecutor.execute(storm, surls, recursion, count);
+    }
 
     public LsOutputData lsDetailed(String userDN, List<String> userFQANS, List<String> surls) throws ApiException
     {
         return LsExecutor.executeDetailed(storm, userDN, userFQANS, surls);
+    }
+    
+    public LsOutputData lsDetailed(String userDN, List<String> surls) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, userDN, surls);
+    }
+    
+    public LsOutputData lsDetailed(List<String> surls) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, surls);
     }
 
     public LsOutputData lsDetailed(String userDN, List<String> userFQANS, List<String> surls, RecursionLevel recursion)
@@ -132,10 +201,32 @@ public class BackendApi
     {
         return LsExecutor.executeDetailed(storm, userDN, userFQANS, surls, recursion);
     }
-        
+
+    public LsOutputData lsDetailed(String userDN, List<String> surls, RecursionLevel recursion)
+            throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, userDN, surls, recursion);
+    }
+    
+    public LsOutputData lsDetailed(List<String> surls, RecursionLevel recursion)
+            throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, surls, recursion);
+    }
+    
     public LsOutputData lsDetailed(String userDN, List<String> userFQANS, List<String> surls, Integer count) throws ApiException
     {
         return LsExecutor.executeDetailed(storm, userDN, userFQANS, surls, count);
+    }
+    
+    public LsOutputData lsDetailed(String userDN, List<String> surls, Integer count) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, userDN, surls, count);
+    }
+    
+    public LsOutputData lsDetailed(List<String> surls, Integer count) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, surls, count);
     }
     
     public LsOutputData lsDetailed(String userDN, List<String> userFQANS,
@@ -144,20 +235,60 @@ public class BackendApi
         return LsExecutor.executeDetailed(storm, userDN, userFQANS, surls, recursion, count);
     }
     
+    public LsOutputData lsDetailed(String userDN, 
+            List<String> surls, RecursionLevel recursion, Integer count) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, userDN, surls, recursion, count);
+    }
+    
+    public LsOutputData lsDetailed(List<String> surls, RecursionLevel recursion, Integer count) throws ApiException
+    {
+        return LsExecutor.executeDetailed(storm, surls, recursion, count);
+    }
+    
     public FileTransferOutputData prepareToPut(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return PtPExecutor.execute(storm, userDN, userFQANS, surl);
+    }
+    
+    public FileTransferOutputData prepareToPut(String userDN, String surl) throws ApiException
+    {
+        return PtPExecutor.execute(storm, userDN, surl);
+    }
+    
+    public FileTransferOutputData prepareToPut(String surl) throws ApiException
+    {
+        return PtPExecutor.execute(storm, surl);
     }
 
     public FileTransferOutputData prepareToPut(String userDN, List<String> userFQANS, String surl, List<String> transferProtocols) throws ApiException
     {
         return PtPExecutor.execute(storm, userDN, userFQANS, surl, transferProtocols);
     }
+    
+    public FileTransferOutputData prepareToPut(String userDN, String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtPExecutor.execute(storm, userDN, surl, transferProtocols);
+    }
+    
+    public FileTransferOutputData prepareToPut(String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtPExecutor.execute(storm, surl, transferProtocols);
+    }
 
     public FileTransferOutputData prepareToPut(String userDN, List<String> userFQANS, String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
     {
         return PtPExecutor.execute(storm, userDN, userFQANS, surl, desiredFileLifetime, desiredPinLifetime);
-       
+    }
+    
+    public FileTransferOutputData prepareToPut(String userDN, String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.execute(storm, userDN, surl, desiredFileLifetime, desiredPinLifetime);
+    }
+    
+    public FileTransferOutputData prepareToPut(String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.execute(storm, surl, desiredFileLifetime, desiredPinLifetime);
     }
     
     public FileTransferOutputData prepareToPut(String userDN, List<String> userFQANS, String surl,
@@ -166,20 +297,61 @@ public class BackendApi
         return PtPExecutor.execute(storm, userDN, userFQANS, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
     }
     
+    public FileTransferOutputData prepareToPut(String userDN, String surl,
+            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.execute(storm, userDN, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
+    }
+    
+    public FileTransferOutputData prepareToPut(String surl,
+            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.execute(storm, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
+    }
+    
     public FileTransferOutputData prepareToPutOverwrite(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return PtPExecutor.executeOverwrite(storm, userDN, userFQANS, surl);
+    }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String userDN, String surl) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, userDN, surl);
+    }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String surl) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, surl);
     }
 
     public FileTransferOutputData prepareToPutOverwrite(String userDN, List<String> userFQANS, String surl, List<String> transferProtocols) throws ApiException
     {
         return PtPExecutor.executeOverwrite(storm, userDN, userFQANS, surl, transferProtocols);
     }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String userDN, String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, userDN, surl, transferProtocols);
+    }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, surl, transferProtocols);
+    }
 
     public FileTransferOutputData prepareToPutOverwrite(String userDN, List<String> userFQANS, String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
     {
         return PtPExecutor.executeOverwrite(storm, userDN, userFQANS, surl, desiredFileLifetime, desiredPinLifetime);
-       
+    }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String userDN, String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, userDN, surl, desiredFileLifetime, desiredPinLifetime);
+    }
+
+    public FileTransferOutputData prepareToPutOverwrite(String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, surl, desiredFileLifetime, desiredPinLifetime);
     }
     
     public FileTransferOutputData prepareToPutOverwrite(String userDN, List<String> userFQANS, String surl,
@@ -187,10 +359,32 @@ public class BackendApi
     {
         return PtPExecutor.executeOverwrite(storm, userDN, userFQANS, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
     }
+
+    public FileTransferOutputData prepareToPutOverwrite(String userDN, String surl,
+            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, userDN, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
+    }
+    
+    public FileTransferOutputData prepareToPutOverwrite(String surl,
+            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
+    {
+        return PtPExecutor.executeOverwrite(storm, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
+    }
     
     public PtGOutputData prepareToGet(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return PtGExecutor.execute(storm, userDN, userFQANS, surl);
+    }
+
+    public PtGOutputData prepareToGet(String userDN, String surl) throws ApiException
+    {
+        return PtGExecutor.execute(storm, userDN, surl);
+    }
+    
+    public PtGOutputData prepareToGet(String surl) throws ApiException
+    {
+        return PtGExecutor.execute(storm, surl);
     }
     
     public PtGOutputData prepareToGet(String userDN, List<String> userFQANS, String surl, List<String> transferProtocols) throws ApiException
@@ -198,11 +392,31 @@ public class BackendApi
         return PtGExecutor.execute(storm, userDN, userFQANS, surl, transferProtocols);
     }
     
+    public PtGOutputData prepareToGet(String userDN, String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtGExecutor.execute(storm, userDN, surl, transferProtocols);
+    }
+    
+    public PtGOutputData prepareToGet(String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtGExecutor.execute(storm, surl, transferProtocols);
+    }
+    
     public SurlArrayRequestOutputData releaseFiles(String userDN, List<String> userFQANS, List<String> surls, TRequestToken requestToken) throws ApiException
     {
         return ReleaseFilesExecutor.execute(storm, userDN, userFQANS, surls, requestToken);
     }
+    
+    public SurlArrayRequestOutputData releaseFiles(String userDN, List<String> surls, TRequestToken requestToken) throws ApiException
+    {
+        return ReleaseFilesExecutor.execute(storm, userDN, surls, requestToken);
+    }
 
+    public SurlArrayRequestOutputData releaseFiles(List<String> surls, TRequestToken requestToken) throws ApiException
+    {
+        return ReleaseFilesExecutor.execute(storm, surls, requestToken);
+    }
+    
     public OutputData extendFileLifeTime(String userDN, List<String> userFQANS, String surl, long fileLifetime) throws ApiException
     {
         throw new ApiException("Unable to perform extendFileLifeTime call. Not implemented");
@@ -217,12 +431,32 @@ public class BackendApi
     {
         return AbortRequestExecutor.execute(storm, userDN, userFQANS, requestToken);
     }
+    
+    public RequestOutputData abortRequest(String userDN, TRequestToken requestToken) throws ApiException
+    {
+        return AbortRequestExecutor.execute(storm, userDN, requestToken);
+    }
 
+    public RequestOutputData abortRequest(TRequestToken requestToken) throws ApiException
+    {
+        return AbortRequestExecutor.execute(storm, requestToken);
+    }
+    
     public SurlArrayRequestOutputData abortFiles(String userDN, List<String> userFQANS, TRequestToken requestToken, List<String> surls) throws ApiException
     {
         return AbortFilesExecutor.execute(storm, userDN, userFQANS, surls, requestToken);
     }
 
+    public SurlArrayRequestOutputData abortFiles(String userDN, TRequestToken requestToken, List<String> surls) throws ApiException
+    {
+        return AbortFilesExecutor.execute(storm, userDN, surls, requestToken);
+    }
+
+    public SurlArrayRequestOutputData abortFiles(TRequestToken requestToken, List<String> surls) throws ApiException
+    {
+        return AbortFilesExecutor.execute(storm, surls, requestToken);
+    }
+    
     public OutputData reserveSpace(String userDN, List<String> userFQANS, String spaceAlias,
             TRetentionPolicyInfo retentionPolicyInfo, TSizeInBytes desiredSizeOfTotalSpace,
             TSizeInBytes desiredSizeOfGuaranteedSpace, TLifeTimeInSeconds desiredLifetimeOfReservedSpace,
@@ -264,9 +498,29 @@ public class BackendApi
         return MkdirExecutor.execute(storm, userDN, userFQANS, surl);
     }
 
+    public RequestOutputData mkdir(String userDN, String surl) throws ApiException
+    {
+        return MkdirExecutor.execute(storm, userDN, surl);
+    }
+
+    public RequestOutputData mkdir(String surl) throws ApiException
+    {
+        return MkdirExecutor.execute(storm, surl);
+    }
+    
     public RequestOutputData rmdir(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return RmdirExecutor.execute(storm, userDN, userFQANS, surl);
+    }
+
+    public RequestOutputData rmdir(String userDN, String surl) throws ApiException
+    {
+        return RmdirExecutor.execute(storm, userDN, surl);
+    }
+    
+    public RequestOutputData rmdir(String surl) throws ApiException
+    {
+        return RmdirExecutor.execute(storm, surl);
     }
     
     public RequestOutputData rmdirRecursively(String userDN, List<String> userFQANS, String surl) throws ApiException
@@ -274,13 +528,43 @@ public class BackendApi
         return RmdirExecutor.executeRecursive(storm, userDN, userFQANS, surl);
     }
 
+    public RequestOutputData rmdirRecursively(String userDN, String surl) throws ApiException
+    {
+        return RmdirExecutor.executeRecursive(storm, userDN, surl);
+    }
+    
+    public RequestOutputData rmdirRecursively(String surl) throws ApiException
+    {
+        return RmdirExecutor.executeRecursive(storm, surl);
+    }
+    
     public RequestOutputData rm(String userDN, List<String> userFQANS, List<String> surls) throws ApiException
     {
         return RmExecutor.execute(storm, userDN, userFQANS, surls);
     }
 
+    public RequestOutputData rm(String userDN, List<String> surls) throws ApiException
+    {
+        return RmExecutor.execute(storm, userDN, surls);
+    }
+    
+    public RequestOutputData rm(List<String> surls) throws ApiException
+    {
+        return RmExecutor.execute(storm, surls);
+    }
+    
     public RequestOutputData mv(String userDN, List<String> userFQANS, String fromSurl, String toSurl) throws ApiException
     {
         return MvExecutor.execute(storm, userDN, userFQANS, fromSurl, toSurl);
+    }
+    
+    public RequestOutputData mv(String userDN, String fromSurl, String toSurl) throws ApiException
+    {
+        return MvExecutor.execute(storm, userDN, fromSurl, toSurl);
+    }
+    
+    public RequestOutputData mv(String fromSurl, String toSurl) throws ApiException
+    {
+        return MvExecutor.execute(storm, fromSurl, toSurl);
     }
 }

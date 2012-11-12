@@ -33,6 +33,46 @@ public class RmExecutor
         return doIt(storm, parameters);
     }
     
+    public static RequestOutputData execute(synchcall storm, String userDN, List<String> surls) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call rm command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = SurlArrayRequestEncoder.getInstance().encode(userDN, surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode rm parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static RequestOutputData execute(synchcall storm, List<String> surls) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call rm command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = SurlArrayRequestEncoder.getInstance().encode(surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode rm parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     private static RequestOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException
     {
         Map<String, Object> output;

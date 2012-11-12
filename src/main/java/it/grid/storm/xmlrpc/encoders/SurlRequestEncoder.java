@@ -24,13 +24,28 @@ public class SurlRequestEncoder
     public Map<String, Object> encode(String userDN, List<String> userFQANS, String surl)
             throws IllegalArgumentException
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encode(userDN, surl);
         EncodingUtils.checkFQANS(userFQANS);
+
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+
+
+    public Map<String, Object> encode(String userDN, String surl)
+    {
+        Map<String, Object> encoding = encode(surl);
+        EncodingUtils.checkDN(userDN);
+        
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+
+    public Map<String, Object> encode(String surl)
+    {
         EncodingUtils.checkSurl(surl);
 
         Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.SURL_KEY, surl);
         return encoding;
     }

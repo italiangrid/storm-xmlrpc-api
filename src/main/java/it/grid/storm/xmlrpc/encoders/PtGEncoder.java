@@ -23,13 +23,27 @@ public class PtGEncoder
 
     public Map<String, Object> encode(String userDN, List<String> userFQANS, String surl)
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encode(userDN, surl);
         EncodingUtils.checkFQANS(userFQANS);
+
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+    
+    public Map<String, Object> encode(String userDN, String surl)
+    {
+        Map<String, Object> encoding = encode(surl);
+        EncodingUtils.checkDN(userDN);
+
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+
+    public Map<String, Object> encode(String surl)
+    {
         EncodingUtils.checkSurl(surl);
 
         Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.SURL_KEY, surl);
         encoding.put(XmlRpcParameters.TURL_PREFIX_KEY, XmlRpcDefaults.TURL_PREFIX);
         return encoding;
@@ -38,17 +52,31 @@ public class PtGEncoder
     public Map<String, Object> encode(String userDN, List<String> userFQANS, String surl,
             List<String> transferProtocols)
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encode(userDN, surl, transferProtocols);
         EncodingUtils.checkFQANS(userFQANS);
+
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+    
+    public Map<String, Object> encode(String userDN, String surl, List<String> transferProtocols)
+    {
+        Map<String, Object> encoding = encode(surl, transferProtocols);
+        EncodingUtils.checkDN(userDN);
+        
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+
+
+    public Map<String, Object> encode(String surl, List<String> transferProtocols)
+    {
         EncodingUtils.checkSurl(surl);
         EncodingUtils.checkTransferProtocols(transferProtocols);
 
         Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.SURL_KEY, surl);
         encoding.put(XmlRpcParameters.TURL_PREFIX_KEY, transferProtocols.toArray());
         return encoding;
     }
-
 }

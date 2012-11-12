@@ -46,7 +46,51 @@ public class AbortFilesExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encode(userDN, userFQANS, surls, requestToken);
+            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, userFQANS, surls, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode abortFiles parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, List<String> surls,
+            TRequestToken requestToken) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || requestToken == null)
+        {
+            throw new IllegalArgumentException("Unable to call pd command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls
+                    + " requestToken=" + requestToken);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, surls, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode abortFiles parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static SurlArrayRequestOutputData execute(synchcall storm, List<String> surls,
+            TRequestToken requestToken) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || requestToken == null)
+        {
+            throw new IllegalArgumentException("Unable to call pd command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " requestToken=" + requestToken);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(surls, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode abortFiles parameters. IllegalArgumentException: "

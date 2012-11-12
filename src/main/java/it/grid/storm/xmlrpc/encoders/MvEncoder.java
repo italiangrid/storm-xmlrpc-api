@@ -22,17 +22,30 @@ public class MvEncoder
     public Map<String, Object> encode(String userDN, List<String> userFQANS, String fromSurl, String toSurl)
             throws IllegalArgumentException
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encode(userDN, fromSurl, toSurl);
         EncodingUtils.checkFQANS(userFQANS);
+
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+
+    public Map<String, Object> encode(String userDN, String fromSurl, String toSurl)
+    {
+        Map<String, Object> encoding = encode(fromSurl, toSurl);
+        EncodingUtils.checkDN(userDN);
+
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+
+    public Map<String, Object> encode(String fromSurl, String toSurl)
+    {
         EncodingUtils.checkSurl(fromSurl);
         EncodingUtils.checkSurl(toSurl);
 
         Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.MV_FROM_SURL_KEY, fromSurl);
         encoding.put(XmlRpcParameters.MV_TO_SURL_KEY, toSurl);
         return encoding;
     }
-
 }

@@ -52,6 +52,44 @@ public class AbortRequestExecutor
         return doIt(storm, parameters);
     }
     
+    public static RequestOutputData execute(synchcall storm, String userDN, TRequestToken requestToken) throws ApiException
+    {
+        if (storm == null || userDN == null || requestToken == null)
+        {
+            throw new IllegalArgumentException("Unable to call pd command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " requestToken=" + requestToken);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = FinalizeFileTransferEncoder.getInstance().encode(userDN, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode abortRequest parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static RequestOutputData execute(synchcall storm, TRequestToken requestToken) throws ApiException
+    {
+        if (storm == null || requestToken == null)
+        {
+            throw new IllegalArgumentException("Unable to call pd command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " requestToken=" + requestToken);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = FinalizeFileTransferEncoder.getInstance().encode(requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode abortRequest parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     private static RequestOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException
     {
         Map<String, Object> output;

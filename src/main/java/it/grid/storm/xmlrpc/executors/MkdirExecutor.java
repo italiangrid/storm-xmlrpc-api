@@ -33,6 +33,46 @@ public class MkdirExecutor
         return doIt(storm, parameters);
     }
     
+    public static RequestOutputData execute(synchcall storm, String userDN, String surl) throws ApiException
+    {
+        if (storm == null || userDN == null || surl == null
+                || surl.trim().isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call mkdir command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = SurlRequestEncoder.getInstance().encode(userDN, surl);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode mkdir parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static RequestOutputData execute(synchcall storm, String surl) throws ApiException
+    {
+        if (storm == null || surl == null
+                || surl.trim().isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call mkdir command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surl=" + surl);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = SurlRequestEncoder.getInstance().encode(surl);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode mkdir parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     private static RequestOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException
     {
         Map<String, Object> output;

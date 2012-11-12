@@ -55,6 +55,46 @@ public class LsExecutor
         return doIt(storm, parameters);
     }
     
+    public static LsOutputData execute(synchcall storm, String userDN, List<String> surls) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN  + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(userDN, surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData execute(synchcall storm, List<String> surls) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> userFQANS,
             List<String> surls) throws ApiException
     {
@@ -76,6 +116,48 @@ public class LsExecutor
         return doIt(storm, parameters);
     }
     
+
+    public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> surls) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(userDN, surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData executeDetailed(synchcall storm, List<String> surls) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(surls);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    
     public static LsOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
             List<String> surls, RecursionLevel recursion) throws ApiException
     {
@@ -90,6 +172,49 @@ public class LsExecutor
         try
         {
             parameters = LsEncoder.getInstance().encode(userDN, userFQANS, surls, recursion);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static LsOutputData execute(synchcall storm, String userDN, List<String> surls,
+            RecursionLevel recursion) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || recursion == null)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN  + " surls=" + surls
+                    + " recursion=" + recursion);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(userDN, surls, recursion);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData execute(synchcall storm, List<String> surls, RecursionLevel recursion) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || recursion == null)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " recursion=" + recursion);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(surls, recursion);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
@@ -120,6 +245,49 @@ public class LsExecutor
         return doIt(storm, parameters);
     }
     
+    public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> surls,
+            RecursionLevel recursion) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || recursion == null)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls
+                    + " recursion=" + recursion);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(userDN, surls, recursion);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData executeDetailed(synchcall storm, List<String> surls, RecursionLevel recursion) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || recursion == null)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " recursion=" + recursion);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(surls, recursion);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     public static LsOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
             List<String> surls, Integer count) throws ApiException
     {
@@ -142,6 +310,48 @@ public class LsExecutor
         return doIt(storm, parameters);
     }
     
+    public static LsOutputData execute(synchcall storm, String userDN, List<String> surls, Integer count) throws ApiException
+    {
+        if ((storm == null ? "null" : "not null") == null || userDN == null|| surls == null
+                || surls.isEmpty() || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + storm + " userDN=" + userDN  + " surls=" + surls
+                    + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(userDN, surls, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData execute(synchcall storm, List<String> surls, Integer count) throws ApiException
+    {
+        if ((storm == null ? "null" : "not null") == null || surls == null
+                || surls.isEmpty() || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + storm + " surls=" + surls
+                    + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(surls, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> userFQANS,
             List<String> surls, Integer count) throws ApiException
     {
@@ -156,6 +366,49 @@ public class LsExecutor
         try
         {
             parameters = LsEncoder.getInstance().encodeDetailed(userDN, userFQANS, surls, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> surls,
+            Integer count) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls
+                    + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(userDN, surls, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData executeDetailed(synchcall storm, List<String> surls, Integer count) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(surls, count);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
@@ -186,6 +439,51 @@ public class LsExecutor
         return doIt(storm, parameters);
     }
     
+
+    public static LsOutputData execute(synchcall storm, String userDN, List<String> surls,
+            RecursionLevel recursion, Integer count) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || recursion == null || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls
+                    + " recursion=" + recursion + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(userDN, surls, recursion, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData execute(synchcall storm, List<String> surls, RecursionLevel recursion,
+            Integer count) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || recursion == null || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " recursion=" + recursion + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encode(surls, recursion, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> userFQANS,
             List<String> surls, RecursionLevel recursion, Integer count) throws ApiException
     {
@@ -200,6 +498,51 @@ public class LsExecutor
         try
         {
             parameters = LsEncoder.getInstance().encodeDetailed(userDN, userFQANS, surls, recursion, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+
+    public static LsOutputData executeDetailed(synchcall storm, String userDN, List<String> surls,
+            RecursionLevel recursion, Integer count) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty() || recursion == null || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls
+                    + " recursion=" + recursion + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(userDN, surls, recursion, count);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static LsOutputData executeDetailed(synchcall storm, List<String> surls, RecursionLevel recursion,
+            Integer count) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty() || recursion == null || count == null || count <= 0)
+        {
+            throw new IllegalArgumentException("Unable to call ls command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls
+                    + " recursion=" + recursion + " count=" + count);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = LsEncoder.getInstance().encodeDetailed(surls, recursion, count);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode ls parameters. IllegalArgumentException: "
@@ -231,5 +574,8 @@ public class LsExecutor
             throw new ApiException("Unable to decode ls call output. DecodingException: " + e.getMessage());
         }
     }
+
+
+
 
 }

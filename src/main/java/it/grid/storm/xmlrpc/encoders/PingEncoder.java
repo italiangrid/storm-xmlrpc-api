@@ -41,12 +41,20 @@ public class PingEncoder
     public Map<String, Object> encode(String userDN, List<String> userFQANS)
             throws IllegalArgumentException
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encode(userDN);
         EncodingUtils.checkFQANS(userFQANS);
+        
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+
+
+    public Map<String, Object> encode(String userDN)
+    {
+        EncodingUtils.checkDN(userDN);
         
         HashMap<String, Object> encoding = new HashMap<String, Object>();
         encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.AUTHID_KEY, XmlRpcDefaults.PING_AUTHID);
         return encoding;
     }

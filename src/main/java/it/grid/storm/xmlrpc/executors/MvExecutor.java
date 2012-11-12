@@ -35,6 +35,46 @@ public class MvExecutor
         return doIt(storm, parameters);
     }
     
+    public static RequestOutputData execute(synchcall storm, String userDN, String fromSurl, String toSurl) throws ApiException
+    {
+        if (storm == null || userDN == null || fromSurl == null
+                || toSurl == null)
+        {
+            throw new IllegalArgumentException("Unable to call mv command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " fromSurl=" + fromSurl + " toSurl=" + toSurl);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = MvEncoder.getInstance().encode(userDN, fromSurl, toSurl);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode mv parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+
+    public static RequestOutputData execute(synchcall storm, String fromSurl, String toSurl) throws ApiException
+    {
+        if (storm == null || fromSurl == null
+                || toSurl == null)
+        {
+            throw new IllegalArgumentException("Unable to call mv command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " fromSurl=" + fromSurl + " toSurl=" + toSurl);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = MvEncoder.getInstance().encode(fromSurl, toSurl);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode mv parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
     private static RequestOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException
     {
         Map<String, Object> output;
@@ -57,4 +97,6 @@ public class MvExecutor
             throw new ApiException("Unable to decode mv call output. DecodingException: " + e.getMessage());
         }
     }
+
+
 }

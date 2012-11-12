@@ -40,28 +40,56 @@ public class FinalizeFileTransferEncoder
     public Map<String, Object> encode(String userDN, List<String> userFQANS, TRequestToken requestToken)
             throws IllegalArgumentException
     {
-        EncodingUtils.checkDN(userDN);
-        EncodingUtils.checkFQANS(userFQANS);
+        Map<String, Object> encoding = encode(userDN, requestToken);
         EncodingUtils.checkToken(requestToken);
 
-        Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
         encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
-        encoding.put(TRequestToken.PNAME_REQUESTOKEN, requestToken.toString());
+        return encoding;
+    }
+    
+    public Map<String, Object> encode(String userDN, TRequestToken requestToken)
+    {
+        Map<String, Object> encoding = encode(requestToken);
+        EncodingUtils.checkDN(userDN);
+
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
         return encoding;
     }
 
-    public Map<String, Object> encode(String userDN, List<String> userFQANS, List<String> surls,
+    public Map<String, Object> encode(TRequestToken requestToken)
+    {
+        EncodingUtils.checkToken(requestToken);
+
+        Map<String, Object> encoding = new HashMap<String, Object>();
+        encoding.put(TRequestToken.PNAME_REQUESTOKEN, requestToken.toString());
+        return encoding;
+    }
+    
+    public Map<String, Object> encodeWithSurls(String userDN, List<String> userFQANS, List<String> surls,
             TRequestToken requestToken) throws IllegalArgumentException
     {
-        EncodingUtils.checkDN(userDN);
+        Map<String, Object> encoding = encodeWithSurls(userDN, surls, requestToken);
         EncodingUtils.checkFQANS(userFQANS);
+
+        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
+        return encoding;
+    }
+    
+    public Map<String, Object> encodeWithSurls(String userDN, List<String> surls, TRequestToken requestToken)
+    {
+        Map<String, Object> encoding = encodeWithSurls(surls, requestToken);
+        EncodingUtils.checkDN(userDN);
+
+        encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+    
+    public Map<String, Object> encodeWithSurls(List<String> surls, TRequestToken requestToken)
+    {
         EncodingUtils.checkSurls(surls);
         EncodingUtils.checkToken(requestToken);
 
         Map<String, Object> encoding = new HashMap<String, Object>();
-        encoding.put(XmlRpcParameters.DN_KEY, userDN);
-        encoding.put(XmlRpcParameters.FQANS_KEY, userFQANS.toArray());
         encoding.put(XmlRpcParameters.ARRAYOF_SURLS_KEY, surls.toArray(new String[surls.size()]));
         encoding.put(TRequestToken.PNAME_REQUESTOKEN, requestToken.toString());
         return encoding;
