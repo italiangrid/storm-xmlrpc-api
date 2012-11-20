@@ -19,7 +19,6 @@ import it.grid.storm.xmlrpc.decoders.PingDecoder;
 import it.grid.storm.xmlrpc.encoders.PingEncoder;
 import it.grid.storm.xmlrpc.outputdata.PingOutputData;
 import it.grid.storm.xmlrpc.remote.synchcall;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import redstone.xmlrpc.XmlRpcFault;
@@ -30,7 +29,7 @@ import redstone.xmlrpc.XmlRpcFault;
 public class PingExecutor
 {
 
-    private static final Map<String, Object> EMPTY_PARAMETERS = new HashMap<String, Object>();
+    private static final Map<String, Object> DEFAULT_PARAMETERS = PingEncoder.getInstance().encode();
 
     public static PingOutputData execute(synchcall storm, String userDN, List<String> userFQANS)
             throws ApiException, IllegalArgumentException
@@ -78,7 +77,7 @@ public class PingExecutor
             throw new IllegalArgumentException("Unable to call ping command. Received null arguments: storm="
                     + (storm == null ? "null" : "not null"));
         }
-        return doIt(storm, EMPTY_PARAMETERS);
+        return doIt(storm, DEFAULT_PARAMETERS);
     }
 
     private static PingOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException

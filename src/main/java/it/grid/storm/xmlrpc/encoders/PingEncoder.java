@@ -51,10 +51,16 @@ public class PingEncoder
 
     public Map<String, Object> encode(String userDN)
     {
+        Map<String, Object> encoding = encode();
         EncodingUtils.checkDN(userDN);
         
-        HashMap<String, Object> encoding = new HashMap<String, Object>();
         encoding.put(XmlRpcParameters.DN_KEY, userDN);
+        return encoding;
+    }
+    
+    public Map<String, Object> encode()
+    {
+        HashMap<String, Object> encoding = new HashMap<String, Object>();
         encoding.put(XmlRpcParameters.AUTHID_KEY, XmlRpcDefaults.PING_AUTHID);
         return encoding;
     }
