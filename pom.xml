@@ -5,18 +5,6 @@
 	<artifactId>xmlrpc-api</artifactId>
 	<version>0.0.15-SNAPSHOT</version>
 
-	<repositories>
-		<repository>
-			<id>jboss-thirdparty</id>
-			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>redstone.xmlrpc</groupId>
@@ -48,4 +36,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+    		<repository>
+      			<id>cnaf-releases</id>
+      			<name>CNAF releases</name>
+      			<url>http://radiohead.cnaf.infn.it:8081/nexus/content/repositories/cnaf-releases/</url>
+    		</repository>
+    		<snapshotRepository>
+      			<id>cnaf-snapshots</id>
+      			<name>CNAF snapshots</name>
+      			<url>http://radiohead.cnaf.infn.it:8081/nexus/content/repositories/cnaf-snapshots/</url>
+    		</snapshotRepository>
+  	</distributionManagement>
 </project>
