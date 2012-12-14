@@ -18,7 +18,7 @@ import it.grid.storm.srm.types.TRequestToken;
 import it.grid.storm.xmlrpc.ApiException;
 import it.grid.storm.xmlrpc.decoders.DecodingException;
 import it.grid.storm.xmlrpc.decoders.SympleStatusDecoder;
-import it.grid.storm.xmlrpc.encoders.FinalizeFileTransferEncoder;
+import it.grid.storm.xmlrpc.encoders.ManageFileTransferEncoder;
 import it.grid.storm.xmlrpc.outputdata.RequestOutputData;
 import it.grid.storm.xmlrpc.remote.synchcall;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AbortRequestExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encode(userDN, userFQANS, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encode(userDN, userFQANS, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode abortRequest parameters. IllegalArgumentException: "
@@ -62,7 +62,7 @@ public class AbortRequestExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encode(userDN, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encode(userDN, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode abortRequest parameters. IllegalArgumentException: "
@@ -81,7 +81,7 @@ public class AbortRequestExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encode(requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encode(requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode abortRequest parameters. IllegalArgumentException: "

@@ -18,7 +18,7 @@ import it.grid.storm.srm.types.TRequestToken;
 import it.grid.storm.xmlrpc.ApiException;
 import it.grid.storm.xmlrpc.decoders.DecodingException;
 import it.grid.storm.xmlrpc.decoders.SurlArrayStatusDecoder;
-import it.grid.storm.xmlrpc.encoders.FinalizeFileTransferEncoder;
+import it.grid.storm.xmlrpc.encoders.ManageFileTransferEncoder;
 import it.grid.storm.xmlrpc.outputdata.SurlArrayRequestOutputData;
 import it.grid.storm.xmlrpc.remote.synchcall;
 import java.util.List;
@@ -44,7 +44,7 @@ public class PutDoneExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, userFQANS, surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(userDN, userFQANS, surls, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode pd parameters. IllegalArgumentException: "
@@ -67,7 +67,7 @@ public class PutDoneExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(userDN, surls, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode pd parameters. IllegalArgumentException: "
@@ -89,7 +89,7 @@ public class PutDoneExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(surls, requestToken);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode pd parameters. IllegalArgumentException: "

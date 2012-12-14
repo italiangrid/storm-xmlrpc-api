@@ -4,7 +4,7 @@ import it.grid.storm.srm.types.TRequestToken;
 import it.grid.storm.xmlrpc.ApiException;
 import it.grid.storm.xmlrpc.decoders.DecodingException;
 import it.grid.storm.xmlrpc.decoders.SurlArrayStatusDecoder;
-import it.grid.storm.xmlrpc.encoders.FinalizeFileTransferEncoder;
+import it.grid.storm.xmlrpc.encoders.ManageFileTransferEncoder;
 import it.grid.storm.xmlrpc.outputdata.SurlArrayRequestOutputData;
 import it.grid.storm.xmlrpc.remote.synchcall;
 import java.util.List;
@@ -26,7 +26,28 @@ public class ReleaseFilesExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, userFQANS, surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(userDN, userFQANS, surls, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
+            List<String> surls) throws ApiException
+    {
+        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call rf command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = ManageFileTransferEncoder.getInstance().encode(userDN, userFQANS, surls);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
@@ -48,7 +69,27 @@ public class ReleaseFilesExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(userDN, surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(userDN, surls, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, List<String> surls) throws ApiException
+    {
+        if (storm == null || userDN == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call rf command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = ManageFileTransferEncoder.getInstance().encode(userDN, surls);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
@@ -70,7 +111,27 @@ public class ReleaseFilesExecutor
         Map<String, Object> parameters;
         try
         {
-            parameters = FinalizeFileTransferEncoder.getInstance().encodeWithSurls(surls, requestToken);
+            parameters = ManageFileTransferEncoder.getInstance().encodeWithSurls(surls, requestToken);
+        } catch(IllegalArgumentException e)
+        {
+            throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
+                    + e.getMessage());
+        }
+        return doIt(storm, parameters);
+    }
+    
+    public static SurlArrayRequestOutputData execute(synchcall storm, List<String> surls) throws ApiException
+    {
+        if (storm == null || surls == null
+                || surls.isEmpty())
+        {
+            throw new IllegalArgumentException("Unable to call rf command. Received null arguments: storm="
+                    + (storm == null ? "null" : "not null") + " surls=" + surls);
+        }
+        Map<String, Object> parameters;
+        try
+        {
+            parameters = ManageFileTransferEncoder.getInstance().encode(surls);
         } catch(IllegalArgumentException e)
         {
             throw new ApiException("Unable to encode rf parameters. IllegalArgumentException: "
@@ -101,4 +162,5 @@ public class ReleaseFilesExecutor
             throw new ApiException("Unable to decode rf call output. DecodingException: " + e.getMessage());
         }
     }
+
 }

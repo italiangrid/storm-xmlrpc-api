@@ -15,6 +15,8 @@ public interface synchcall
     public Map<String, Object> ls(Map<String, Object> inputParam) throws XmlRpcFault;
 
     public Map<String, Object> prepareToPut(Map<String, Object> inputParam) throws XmlRpcFault;
+    
+    public Map<String, Object> prepareToPutStatus(Map<String, Object> parameters) throws XmlRpcFault;
 
     public Map<String, Object> putDone(Map<String, Object> inputParam) throws XmlRpcFault;
 
@@ -43,5 +45,7 @@ public interface synchcall
     public Map<String, Object> mv(Map<String, Object> inputParam) throws XmlRpcFault;
 
     public Map<String, Object> prepareToGet(Map<String, Object> inputParam) throws XmlRpcFault;
+
+    public Map<String, Object> prepareToGetStatus(Map<String, Object> parameters) throws XmlRpcFault;
 
 }
