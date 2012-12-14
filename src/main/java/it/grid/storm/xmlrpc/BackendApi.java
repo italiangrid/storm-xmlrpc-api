@@ -431,6 +431,11 @@ public class BackendApi
         return PtGExecutor.execute(storm, userDN, surl, transferProtocols);
     }
     
+    public PtGOutputData prepareToGet(String surl, List<String> transferProtocols) throws ApiException
+    {
+        return PtGExecutor.execute(storm, surl, transferProtocols);
+    }
+    
     public RequestOutputData prepareToGetStatus(String userDN, List<String> userFQANS, String surl,
             TRequestToken requestToken) throws ApiException
     {
