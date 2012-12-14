@@ -373,35 +373,35 @@ public class BackendApi
         return PtPExecutor.executeOverwrite(storm, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
     }
     
-    public RequestOutputData prepareToPutStatus(String userDN, List<String> userFQANS, String surl,
+    public SurlArrayRequestOutputData prepareToPutStatus(String userDN, List<String> userFQANS, String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, userFQANS, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
     
-    public RequestOutputData prepareToPutStatus(String userDN, List<String> userFQANS, String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToPutStatus(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, userFQANS, surl, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
 
-    public RequestOutputData prepareToPutStatus(String userDN, String surl,
+    public SurlArrayRequestOutputData prepareToPutStatus(String userDN, String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
     
-    public RequestOutputData prepareToPutStatus(String userDN, String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToPutStatus(String userDN, String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, surl, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
     
-    public RequestOutputData prepareToPutStatus(String surl,
+    public SurlArrayRequestOutputData prepareToPutStatus(String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
     
-    public RequestOutputData prepareToPutStatus(String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToPutStatus(String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, surl, SurlRequestStatusExecutor.SurlRequestType.PTP);
     }
@@ -436,35 +436,35 @@ public class BackendApi
         return PtGExecutor.execute(storm, surl, transferProtocols);
     }
     
-    public RequestOutputData prepareToGetStatus(String userDN, List<String> userFQANS, String surl,
+    public SurlArrayRequestOutputData prepareToGetStatus(String userDN, List<String> userFQANS, String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, userFQANS, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }
     
-    public RequestOutputData prepareToGetStatus(String userDN, List<String> userFQANS, String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToGetStatus(String userDN, List<String> userFQANS, String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, userFQANS, surl, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }
 
-    public RequestOutputData prepareToGetStatus(String userDN, String surl,
+    public SurlArrayRequestOutputData prepareToGetStatus(String userDN, String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }
     
-    public RequestOutputData prepareToGetStatus(String userDN, String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToGetStatus(String userDN, String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, userDN, surl, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }
     
-    public RequestOutputData prepareToGetStatus(String surl,
+    public SurlArrayRequestOutputData prepareToGetStatus(String surl,
             TRequestToken requestToken) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, surl, requestToken, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }
     
-    public RequestOutputData prepareToGetStatus(String surl) throws ApiException
+    public SurlArrayRequestOutputData prepareToGetStatus(String surl) throws ApiException
     {
         return SurlRequestStatusExecutor.execute(storm, surl, SurlRequestStatusExecutor.SurlRequestType.PTG);
     }

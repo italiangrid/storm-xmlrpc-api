@@ -5,7 +5,7 @@ import it.grid.storm.xmlrpc.ApiException;
 import it.grid.storm.xmlrpc.decoders.DecodingException;
 import it.grid.storm.xmlrpc.decoders.SurlArrayStatusDecoder;
 import it.grid.storm.xmlrpc.encoders.ManageFileTransferEncoder;
-import it.grid.storm.xmlrpc.outputdata.RequestOutputData;
+import it.grid.storm.xmlrpc.outputdata.SurlArrayRequestOutputData;
 import it.grid.storm.xmlrpc.remote.synchcall;
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ public class SurlRequestStatusExecutor
         PTP,PTG
     }
 
-    public static RequestOutputData execute(synchcall storm, String userDN, List<String> userFQANS, String surl,
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, List<String> userFQANS, String surl,
             TRequestToken requestToken, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
@@ -44,7 +44,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
 
-    public static RequestOutputData execute(synchcall storm, String userDN, List<String> userFQANS, String surl, SurlRequestType requestType) throws ApiException
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, List<String> userFQANS, String surl, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
                 || surl.trim().isEmpty() || requestType == null)
@@ -64,7 +64,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
 
-    public static RequestOutputData execute(synchcall storm, String userDN, String surl,
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, String surl,
             TRequestToken requestToken, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || userDN == null || surl == null
@@ -85,7 +85,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
 
-    public static RequestOutputData execute(synchcall storm, String userDN, String surl, SurlRequestType requestType) throws ApiException
+    public static SurlArrayRequestOutputData execute(synchcall storm, String userDN, String surl, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || userDN == null || surl == null
                 || surl.trim().isEmpty() || requestType == null)
@@ -105,7 +105,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
 
-    public static RequestOutputData execute(synchcall storm, String surl, TRequestToken requestToken, SurlRequestType requestType) throws ApiException
+    public static SurlArrayRequestOutputData execute(synchcall storm, String surl, TRequestToken requestToken, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || surl == null
                 || surl.trim().isEmpty() || requestToken == null || requestToken.getValue().trim().isEmpty() || requestType == null)
@@ -125,7 +125,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
 
-    public static RequestOutputData execute(synchcall storm, String surl, SurlRequestType requestType) throws ApiException
+    public static SurlArrayRequestOutputData execute(synchcall storm, String surl, SurlRequestType requestType) throws ApiException
     {
         if (storm == null || surl == null
                 || surl.trim().isEmpty() || requestType == null)
@@ -145,7 +145,7 @@ public class SurlRequestStatusExecutor
         return doIt(storm, parameters, requestType);
     }
     
-    private static RequestOutputData doIt(synchcall storm, Map<String, Object> parameters, SurlRequestType requestType) throws ApiException
+    private static SurlArrayRequestOutputData doIt(synchcall storm, Map<String, Object> parameters, SurlRequestType requestType) throws ApiException
     {
         Map<String, Object> output;
         try
