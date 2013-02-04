@@ -14,12 +14,14 @@ import it.grid.storm.srm.types.TRequestToken;
 import it.grid.storm.srm.types.TRetentionPolicyInfo;
 import it.grid.storm.srm.types.TReturnStatus;
 import it.grid.storm.srm.types.TSizeInBytes;
+import it.grid.storm.srm.types.TStatusCode;
 import it.grid.storm.srm.types.TUserPermission;
 import it.grid.storm.xmlrpc.outputdata.LsOutputData;
 import it.grid.storm.xmlrpc.outputdata.LsOutputData.SurlInfo;
 import it.grid.storm.xmlrpc.remote.XmlRpcParameters;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
@@ -32,9 +34,12 @@ public class LsDecoder implements OutputDecoder
 
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     private static final LsDecoder instance = new LsDecoder();
+    private final ArrayList<TStatusCode> detailRequireingStatuses = new ArrayList<TStatusCode>();
 
     private LsDecoder()
     {
+        detailRequireingStatuses.add(TStatusCode.SRM_SUCCESS);
+        detailRequireingStatuses.add(TStatusCode.SRM_PARTIAL_SUCCESS);
     }
 
     public static LsDecoder getInstance()
@@ -49,8 +54,7 @@ public class LsDecoder implements OutputDecoder
             throw new IllegalArgumentException("Unable to build the instance. "
                     + "Received null argument: output=" + output);
         }
-        if (output.get(XmlRpcParameters.LS_DETAILS_KEY) == null
-                || output.get(TReturnStatus.PNAME_RETURNSTATUS) == null)
+        if (output.get(TReturnStatus.PNAME_RETURNSTATUS) == null)
         {
             throw new DecodingException("Unable to decode the output. Missing mandatory arguments: output="
                     + output);
@@ -65,7 +69,11 @@ public class LsDecoder implements OutputDecoder
                     + output.get(TReturnStatus.PNAME_STATUS) + "\'. IllegalArgumentException: "
                     + e.getMessage());
         }
-        
+        if(detailRequireingStatuses.contains(decodedStatus.getStatusCode()) && output.get(XmlRpcParameters.LS_DETAILS_KEY) == null)
+        {
+            throw new DecodingException("Unable to decode the output. Missing mandatory arguments: output="
+                    + output);
+        }
         TRequestToken token = null;
         if (output.get(TRequestToken.PNAME_REQUESTOKEN) != null)
         {
