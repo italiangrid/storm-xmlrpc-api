@@ -31,7 +31,7 @@ public class RecursionLevel
     
     public RecursionLevel(Recursion recursionType, Integer level)
     {
-        if (recursionType == null || (recursionType.isSpecificable() && (level == null || level <= 0))
+        if (recursionType == null || (recursionType.isSpecificable() && (level == null || level < 0))
                 || (!recursionType.isSpecificable() && (level != null && level > 0)))
         {
             throw new IllegalArgumentException("Unable to build the object, illegal arguments: "
@@ -108,4 +108,13 @@ public class RecursionLevel
         }
         return this.startingDepth;
     }
+
+    @Override
+    public String toString()
+    {
+        return "RecursionLevel [recursionType=" + recursionType + ", maxLevel=" + maxLevel
+                + ", startingDepth=" + startingDepth + "]";
+    }
+    
+    
 }
