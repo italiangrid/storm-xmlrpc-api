@@ -23,29 +23,27 @@ public class LsOutputData extends RequestOutputData  implements OutputData {
 
     private final ArrayList<SurlInfo> infos;
     private final TRequestToken token;
+    private final boolean hasInfos;
 
-    public LsOutputData(TReturnStatus status, Collection<SurlInfo> infos) throws IllegalArgumentException
+    LsOutputData(Builder builder)
     {
-        super(status);
-        if(infos == null || infos.isEmpty())
+        super(builder.status);
+        if(builder.infos != null)
         {
-            throw new IllegalArgumentException("Unable to create the object, invalid arguments: infos=" + infos);
+            infos = builder.infos;
+            hasInfos = true;
         }
-        this.infos = new ArrayList<SurlInfo>(infos);
-        token = null;
+        else
+        {
+            infos = new ArrayList<SurlInfo>();
+            hasInfos = false;
+        }
+        token = builder.token;
     }
-
-    public LsOutputData(TReturnStatus status, LinkedList<SurlInfo> infos, TRequestToken token)
-        throws IllegalArgumentException
+    
+    public boolean hasInfos()
     {
-        super(status);
-        if(infos == null || infos.isEmpty() || token == null)
-        {
-            throw new IllegalArgumentException("Unable to create the object, invalid arguments: infos="
-                    + infos + "token =" + token);
-        }
-        this.infos = new ArrayList<SurlInfo>(infos);
-        this.token = token;
+        return hasInfos;
     }
     
     /**
@@ -734,9 +732,45 @@ public class LsOutputData extends RequestOutputData  implements OutputData {
         }
 
     }
+
+    public static class Builder
+    {
+        private ArrayList<SurlInfo> infos = null;
+        private TRequestToken token = null;
+        private final TReturnStatus status;
+        
+        public Builder(TReturnStatus status)
+        {
+            this.status = status;
+        }
+        
+        public Builder infos(ArrayList<SurlInfo> infos) throws IllegalArgumentException
+        {
+            if(infos == null || infos.isEmpty())
+            {
+                throw new IllegalArgumentException("Unable to feed the builder, invalid arguments: infos="
+                        + infos);
+            }
+            this.infos = infos;
+            return this;
+        }
+        
+        public Builder token(TRequestToken token) throws IllegalArgumentException
+        {
+            if(token == null)
+            {
+                throw new IllegalArgumentException("Unable to feed the builder, invalid arguments: token =" + token);
+            }
+            this.token = token;
+            return this;
+        }
+        
+        public LsOutputData build()
+        {
+            return new LsOutputData(this);
+        }
+        
+    }
     
-//    public static LsOutputData build(Map output) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 }
+

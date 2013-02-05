@@ -23,7 +23,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -69,11 +68,13 @@ public class LsDecoder implements OutputDecoder
                     + output.get(TReturnStatus.PNAME_STATUS) + "\'. IllegalArgumentException: "
                     + e.getMessage());
         }
+        LsOutputData.Builder builder = new LsOutputData.Builder(decodedStatus);
         if(detailRequireingStatuses.contains(decodedStatus.getStatusCode()) && output.get(XmlRpcParameters.LS_DETAILS_KEY) == null)
         {
             throw new DecodingException("Unable to decode the output. Missing mandatory arguments: output="
                     + output);
         }
+        
         TRequestToken token = null;
         if (output.get(TRequestToken.PNAME_REQUESTOKEN) != null)
         {
@@ -86,11 +87,15 @@ public class LsDecoder implements OutputDecoder
                                             + output.get(TRequestToken.PNAME_REQUESTOKEN) + "\'. IllegalArgumentException: "
                                             + e.getMessage());
             }
+            builder.token(token);
             
         }
-        
+        if(!detailRequireingStatuses.contains(decodedStatus.getStatusCode()))
+        {
+            return builder.build();
+        }
         Collection<Map<String,Object>> surlsInfo = (Collection<Map<String, Object>>) output.get(XmlRpcParameters.LS_DETAILS_KEY);
-        LinkedList<SurlInfo> infos = new LinkedList<SurlInfo>();
+        ArrayList<SurlInfo> infos = new ArrayList<SurlInfo>();
         for (Map<String, Object> surlInfo : surlsInfo)
         {
             try
@@ -104,14 +109,7 @@ public class LsDecoder implements OutputDecoder
             }
             
         }
-        if(token != null)
-        {
-            return new LsOutputData(decodedStatus, infos, token);
-        }
-        else
-        {
-            return new LsOutputData(decodedStatus, infos);    
-        }
+        return builder.infos(infos).build();
     }
     
     private SurlInfo decodeSurlInfo(Map<String, Object> surlInfo) throws DecodingException, IllegalArgumentException
