@@ -1,7 +1,7 @@
-storm-xmlrpc-api
+StoRM-XMLRPC-API
 ================
 
-StoRM xmlrpc-api provides java API for StoRM BackEnd's XMLRPC interface. All of the srm operations provided are synch calls.
+StoRM XMLRPC-API provides java API for StoRM BackEnd's XMLRPC interface. All of the srm operations provided are synch calls.
 
 ## Supported platforms
 
