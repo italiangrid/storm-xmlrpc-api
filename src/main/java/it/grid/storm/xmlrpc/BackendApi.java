@@ -40,6 +40,8 @@ import it.grid.storm.xmlrpc.executors.RmExecutor;
 import it.grid.storm.xmlrpc.executors.RmdirExecutor;
 import it.grid.storm.xmlrpc.outputdata.*;
 import it.grid.storm.xmlrpc.remote.synchcall;
+
+import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -51,23 +53,51 @@ import redstone.xmlrpc.XmlRpcProxy;
  */
 public class BackendApi {
 
+  /**
+   * The name of header where we are putting the token needed
+   * to authenticate at the backend.
+   *  
+   */
+  private String TOKEN_HEADER_NAME = "User-Agent";
+
+  /**
+   * This goes before the actual token in the header value.
+   * 
+   */
+  private String TOKEN_HEADER_VALUE_PRE = "STORM/";
+
+  /**
+   * The XML-RPC proxy.
+   * 
+   */
 	private synchcall storm;
 
 	/**
 	 * @param backendServer
 	 * @param backendPort
+	 * @param token
 	 * @throws Exception
 	 */
-	public BackendApi(String backendServer, Long backendPort) throws ApiException {
+	public BackendApi(String backendServer, Long backendPort, String token) throws ApiException {
 
 		URL url;
+		
 		try {
+		
 			url = new URL("http://" + backendServer + ":" + backendPort + "/RPC2");
+		
 		} catch (MalformedURLException e) {
+		
 			throw new ApiException(e);
+		
 		}
+		
 		storm = (synchcall) XmlRpcProxy.createProxy(url,
 			new Class[] { synchcall.class }, false);
+	
+		XmlRpcProxy proxy = (XmlRpcProxy) Proxy.getInvocationHandler(storm);
+		proxy.setRequestProperty(TOKEN_HEADER_NAME, TOKEN_HEADER_VALUE_PRE + token);
+	
 	}
 
 	/**

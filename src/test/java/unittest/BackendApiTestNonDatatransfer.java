@@ -118,7 +118,7 @@ public class BackendApiTestNonDatatransfer {
 	@Before
 	public void setUp() throws Exception {
 		try {
-			this.client = new BackendApi(hostname, xmlrpcPort);
+			this.client = new BackendApi(hostname, xmlrpcPort, null);
 		} catch (Exception e) {
 			fail("Caught Exception: " + e);
 		}

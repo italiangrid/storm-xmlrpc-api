@@ -100,7 +100,7 @@ public class BackendApiTestDatatransfer
     {
         try
         {
-            this.client = new BackendApi(hostname, xmlrpcPort);
+            this.client = new BackendApi(hostname, xmlrpcPort, null);
         } catch(Exception e)
         {
             fail("Caught Exception: " + e);
