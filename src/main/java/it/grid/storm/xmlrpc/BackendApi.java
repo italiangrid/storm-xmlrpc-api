@@ -64,7 +64,7 @@ public class BackendApi {
    * This goes before the actual token in the header value.
    * 
    */
-  private String TOKEN_HEADER_VALUE_PRE = "STORM/";
+  private String TOKEN_HEADER_VALUE_PREFIX = "STORM/";
 
   /**
    * The XML-RPC proxy.
@@ -96,8 +96,7 @@ public class BackendApi {
 			new Class[] { synchcall.class }, false);
 	
 		XmlRpcProxy proxy = (XmlRpcProxy) Proxy.getInvocationHandler(storm);
-		proxy.setRequestProperty(TOKEN_HEADER_NAME, TOKEN_HEADER_VALUE_PRE + token);
-	
+		proxy.setRequestProperty(TOKEN_HEADER_NAME, TOKEN_HEADER_VALUE_PREFIX + token);
 	}
 
 	/**
