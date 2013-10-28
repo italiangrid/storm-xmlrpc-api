@@ -86,7 +86,7 @@ public class BackendApiTestLs
     {
         try
         {
-            this.client = new BackendApi(beHostname, xmlrpcPort);
+            this.client = new BackendApi(beHostname, xmlrpcPort, null);
         } catch(Exception e)
         {
             fail("Caught Exception: " + e);
