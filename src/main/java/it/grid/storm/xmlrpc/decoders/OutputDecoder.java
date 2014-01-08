@@ -5,11 +5,11 @@ import java.util.Map;
 
 /**
  * @author Michele Dibenedetto
- *
+ * 
  */
-public interface OutputDecoder
-{
+public interface OutputDecoder {
 
-    public OutputData decode(Map<String, Object> output) throws IllegalArgumentException, DecodingException;
+	public OutputData decode(Map<String, Object> output)
+		throws IllegalArgumentException, DecodingException;
 
 }

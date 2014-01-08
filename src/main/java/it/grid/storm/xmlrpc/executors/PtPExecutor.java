@@ -11,644 +11,654 @@ import java.util.List;
 import java.util.Map;
 import redstone.xmlrpc.XmlRpcFault;
 
-public class PtPExecutor
-{
+public class PtPExecutor {
 
-    public static FileTransferOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
-            String surl) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData execute(synchcall storm, String userDN, String surl) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(userDN, surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		List<String> userFQANS, String surl) throws ApiException {
 
-    public static FileTransferOutputData execute(synchcall storm, String surl) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, List<String> userFQANS,
-            String surl) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, String surl) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String surl) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(surl);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		String surl) throws ApiException {
 
-    public static FileTransferOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(userDN, surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData execute(synchcall storm, String userDN, String surl,
-            List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(userDN, surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData execute(synchcall storm, String surl)
+		throws ApiException {
 
-    public static FileTransferOutputData execute(synchcall storm, String surl, List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encode(surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, String surl,
-            List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || surl == null || surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String surl,
-            List<String> transferProtocols) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            parameters = PtPEncoder.getInstance().encodeOverwrite(surl, transferProtocols);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, List<String> userFQANS, String surl) throws ApiException {
 
-    public static FileTransferOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData execute(synchcall storm, String userDN, String surl,
-            TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS,
+				surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData execute(synchcall storm, String surl,
-            TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, String surl,
-            TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, String surl) throws ApiException {
 
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String surl,
-            TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || desiredFileLifetime == null)
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " desiredFileLifetime=" + desiredFileLifetime);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(surl, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(surl, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData execute(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData execute(synchcall storm, String userDN, String surl,
-            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
-            TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(userDN, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String surl) throws ApiException {
 
-    public static FileTransferOutputData execute(synchcall storm, String surl,
-            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
-            TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encode(surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encode(surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, List<String> userFQANS,
-            String surl, List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime, TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || userFQANS == null || userFQANS.isEmpty() || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " userFQANS=" + userFQANS + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
-    
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String userDN, String surl,
-            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
-            TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || userDN == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " userDN=" + userDN + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+		if (storm == null || surl == null || surl.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(surl);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
 
-    public static FileTransferOutputData executeOverwrite(synchcall storm, String surl,
-            List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
-            TLifeTimeInSeconds desiredPinLifetime) throws ApiException
-    {
-        if (storm == null || surl == null
-                || surl.trim().isEmpty() || transferProtocols == null || transferProtocols.isEmpty())
-        {
-            throw new IllegalArgumentException("Unable to call ptp command. Received null arguments: storm="
-                    + (storm == null ? "null" : "not null") + " surl=" + surl
-                    + " transferProtocols=" + transferProtocols);
-        }
-        Map<String, Object> parameters;
-        try
-        {
-            if(desiredPinLifetime == null || desiredPinLifetime.isEmpty())
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(surl, transferProtocols, desiredFileLifetime);    
-            }
-            else
-            {
-                parameters = PtPEncoder.getInstance().encodeOverwrite(surl, transferProtocols, desiredFileLifetime, desiredPinLifetime);
-            }
-            
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to encode ptp parameters. IllegalArgumentException: "
-                    + e.getMessage());
-        }
-        return doIt(storm, parameters);
-    }
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		List<String> userFQANS, String surl, List<String> transferProtocols)
+		throws ApiException {
 
-    private static FileTransferOutputData doIt(synchcall storm, Map<String, Object> parameters) throws ApiException
-    {
-        Map<String, Object> output;
-        try
-        {
-            output = storm.prepareToPut(parameters);
-        } catch(XmlRpcFault e)
-        {
-            throw new ApiException("Unable to perform ptp call. XmlRpcFault: " + e.getMessage());
-        }
-        try
-        {
-            return PtPDecoder.getInstance().decode(output);
-        } catch(IllegalArgumentException e)
-        {
-            throw new ApiException("Unable to decode ptp call output. IllegalArgumentException: "
-                    + e.getMessage());
-        } catch(DecodingException e)
-        {
-            throw new ApiException("Unable to decode ptp call output. DecodingException: " + e.getMessage());
-        }
-    }
-    
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl + " transferProtocols="
+					+ transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl,
+				transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		String surl, List<String> transferProtocols) throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || transferProtocols == null
+			|| transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(userDN, surl,
+				transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String surl,
+		List<String> transferProtocols) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encode(surl, transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, List<String> userFQANS, String surl,
+		List<String> transferProtocols) throws ApiException {
+
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl + " transferProtocols="
+					+ transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, userFQANS,
+				surl, transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, String surl, List<String> transferProtocols)
+		throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || transferProtocols == null
+			|| transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl,
+				transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String surl, List<String> transferProtocols) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			parameters = PtPEncoder.getInstance().encodeOverwrite(surl,
+				transferProtocols);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		List<String> userFQANS, String surl,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl
+					+ " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl,
+					desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl,
+					desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		String surl, TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(userDN, surl,
+					desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(userDN, surl,
+					desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String surl,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(surl, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(surl, desiredFileLifetime,
+					desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, List<String> userFQANS, String surl,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl
+					+ " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN,
+					userFQANS, surl, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN,
+					userFQANS, surl, desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, String surl, TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl,
+					desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl,
+					desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String surl, TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| desiredFileLifetime == null) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " desiredFileLifetime=" + desiredFileLifetime);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(surl,
+					desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(surl,
+					desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		List<String> userFQANS, String surl, List<String> transferProtocols,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl + " transferProtocols="
+					+ transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl,
+					transferProtocols, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(userDN, userFQANS, surl,
+					transferProtocols, desiredFileLifetime, desiredPinLifetime);
+			}
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String userDN,
+		String surl, List<String> transferProtocols,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || transferProtocols == null
+			|| transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(userDN, surl,
+					transferProtocols, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(userDN, surl,
+					transferProtocols, desiredFileLifetime, desiredPinLifetime);
+			}
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData execute(synchcall storm, String surl,
+		List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encode(surl, transferProtocols,
+					desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encode(surl, transferProtocols,
+					desiredFileLifetime, desiredPinLifetime);
+			}
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, List<String> userFQANS, String surl,
+		List<String> transferProtocols, TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || userFQANS == null
+			|| userFQANS.isEmpty() || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " userFQANS=" + userFQANS + " surl=" + surl + " transferProtocols="
+					+ transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN,
+					userFQANS, surl, transferProtocols, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN,
+					userFQANS, surl, transferProtocols, desiredFileLifetime,
+					desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String userDN, String surl, List<String> transferProtocols,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || userDN == null || surl == null
+			|| surl.trim().isEmpty() || transferProtocols == null
+			|| transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " userDN=" + userDN
+					+ " surl=" + surl + " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl,
+					transferProtocols, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(userDN, surl,
+					transferProtocols, desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	public static FileTransferOutputData executeOverwrite(synchcall storm,
+		String surl, List<String> transferProtocols,
+		TLifeTimeInSeconds desiredFileLifetime,
+		TLifeTimeInSeconds desiredPinLifetime) throws ApiException {
+
+		if (storm == null || surl == null || surl.trim().isEmpty()
+			|| transferProtocols == null || transferProtocols.isEmpty()) {
+			throw new IllegalArgumentException(
+				"Unable to call ptp command. Received null arguments: storm="
+					+ (storm == null ? "null" : "not null") + " surl=" + surl
+					+ " transferProtocols=" + transferProtocols);
+		}
+		Map<String, Object> parameters;
+		try {
+			if (desiredPinLifetime == null || desiredPinLifetime.isEmpty()) {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(surl,
+					transferProtocols, desiredFileLifetime);
+			} else {
+				parameters = PtPEncoder.getInstance().encodeOverwrite(surl,
+					transferProtocols, desiredFileLifetime, desiredPinLifetime);
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to encode ptp parameters. IllegalArgumentException: "
+					+ e.getMessage());
+		}
+		return doIt(storm, parameters);
+	}
+
+	private static FileTransferOutputData doIt(synchcall storm,
+		Map<String, Object> parameters) throws ApiException {
+
+		Map<String, Object> output;
+		try {
+			output = storm.prepareToPut(parameters);
+		} catch (XmlRpcFault e) {
+			throw new ApiException("Unable to perform ptp call. XmlRpcFault: "
+				+ e.getMessage());
+		}
+		try {
+			return PtPDecoder.getInstance().decode(output);
+		} catch (IllegalArgumentException e) {
+			throw new ApiException(
+				"Unable to decode ptp call output. IllegalArgumentException: "
+					+ e.getMessage());
+		} catch (DecodingException e) {
+			throw new ApiException(
+				"Unable to decode ptp call output. DecodingException: "
+					+ e.getMessage());
+		}
+	}
+
 }
