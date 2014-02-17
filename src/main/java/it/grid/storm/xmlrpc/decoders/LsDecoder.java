@@ -86,7 +86,7 @@ public class LsDecoder implements OutputDecoder {
 			builder.token(token);
 
 		}
-		if (!detailRequireingStatuses.contains(decodedStatus.getStatusCode())) {
+		if (output.get(XmlRpcParameters.LS_DETAILS_KEY) == null) {
 			return builder.build();
 		}
 		Collection<Map<String, Object>> surlsInfo = (Collection<Map<String, Object>>) output
