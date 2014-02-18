@@ -13,7 +13,6 @@ import it.grid.storm.srm.types.TRequestToken;
 import it.grid.storm.srm.types.TRetentionPolicyInfo;
 import it.grid.storm.srm.types.TReturnStatus;
 import it.grid.storm.srm.types.TSizeInBytes;
-import it.grid.storm.srm.types.TStatusCode;
 import it.grid.storm.srm.types.TUserPermission;
 import it.grid.storm.xmlrpc.outputdata.LsOutputData;
 import it.grid.storm.xmlrpc.outputdata.LsOutputData.SurlInfo;
@@ -31,16 +30,13 @@ public class LsDecoder implements OutputDecoder {
 
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
-	private static final LsDecoder instance = new LsDecoder();
-	private final ArrayList<TStatusCode> detailRequireingStatuses = new ArrayList<TStatusCode>();
+	private static volatile LsDecoder instance = new LsDecoder();
 
 	private LsDecoder() {
 
-		detailRequireingStatuses.add(TStatusCode.SRM_SUCCESS);
-		detailRequireingStatuses.add(TStatusCode.SRM_PARTIAL_SUCCESS);
 	}
 
-	public static LsDecoder getInstance() {
+	public static synchronized LsDecoder getInstance() {
 
 		return instance;
 	}
@@ -53,55 +49,46 @@ public class LsDecoder implements OutputDecoder {
 				+ "Received null argument: output=" + output);
 		}
 		if (output.get(TReturnStatus.PNAME_RETURNSTATUS) == null) {
-			throw new DecodingException(
-				"Unable to decode the output. Missing mandatory arguments: output="
-					+ output);
+			throw new DecodingException("Unable to decode the output. "
+				+ "Missing: " + TReturnStatus.PNAME_RETURNSTATUS);
 		}
 		TReturnStatus decodedStatus;
 		try {
 			decodedStatus = TReturnStatus.decode((Map<String, Object>) output
 				.get(TReturnStatus.PNAME_RETURNSTATUS));
 		} catch (IllegalArgumentException e) {
-			throw new DecodingException("Unable to decode the Return status \'"
-				+ output.get(TReturnStatus.PNAME_STATUS)
-				+ "\'. IllegalArgumentException: " + e.getMessage());
+			throw new DecodingException("Unable to decode the return status. "
+				+ "IllegalArgumentException: " + e.getMessage());
 		}
 		LsOutputData.Builder builder = new LsOutputData.Builder(decodedStatus);
-		if (detailRequireingStatuses.contains(decodedStatus.getStatusCode())
-			&& output.get(XmlRpcParameters.LS_DETAILS_KEY) == null) {
-			throw new DecodingException(
-				"Unable to decode the output. Missing mandatory arguments: output="
-					+ output);
-		}
 
-		TRequestToken token = null;
 		if (output.get(TRequestToken.PNAME_REQUESTOKEN) != null) {
+			TRequestToken token = null;
 			try {
 				token = TRequestToken.decode(output, TRequestToken.PNAME_REQUESTOKEN);
 			} catch (IllegalArgumentException e) {
-				throw new DecodingException("Unable to decode the Request Token \'"
-					+ output.get(TRequestToken.PNAME_REQUESTOKEN)
-					+ "\'. IllegalArgumentException: " + e.getMessage());
+				throw new DecodingException("Unable to decode the request token. "
+					+ "IllegalArgumentException: " + e.getMessage());
 			}
 			builder.token(token);
-
 		}
-		if (output.get(XmlRpcParameters.LS_DETAILS_KEY) == null) {
-			return builder.build();
-		}
-		Collection<Map<String, Object>> surlsInfo = (Collection<Map<String, Object>>) output
-			.get(XmlRpcParameters.LS_DETAILS_KEY);
-		ArrayList<SurlInfo> infos = new ArrayList<SurlInfo>();
-		for (Map<String, Object> surlInfo : surlsInfo) {
-			try {
-				infos.add(decodeSurlInfo(surlInfo));
-			} catch (IllegalArgumentException e) {
-				throw new DecodingException("Unable to decode the Surl Info Token \'"
-					+ surlInfo + "\'. IllegalArgumentException: " + e.getMessage());
+		
+		if (output.get(XmlRpcParameters.LS_DETAILS_KEY) != null) {
+			ArrayList<SurlInfo> infos = new ArrayList<SurlInfo>();
+			Collection<Map<String, Object>> surlsInfo = (Collection<Map<String, Object>>) output
+				.get(XmlRpcParameters.LS_DETAILS_KEY);
+			
+			for (Map<String, Object> surlInfo : surlsInfo) {
+				try {
+					infos.add(decodeSurlInfo(surlInfo));
+				} catch (IllegalArgumentException e) {
+					throw new DecodingException("Unable to decode the Surl Info Token \'"
+						+ surlInfo + "\'. IllegalArgumentException: " + e.getMessage());
+				}
 			}
-
+			builder.infos(infos);
 		}
-		return builder.infos(infos).build();
+		return builder.build();
 	}
 
 	private SurlInfo decodeSurlInfo(Map<String, Object> surlInfo)

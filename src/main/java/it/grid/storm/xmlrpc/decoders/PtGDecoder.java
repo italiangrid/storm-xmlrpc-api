@@ -10,13 +10,13 @@ import java.util.Map;
 
 public class PtGDecoder implements OutputDecoder {
 
-	private static final PtGDecoder instance = new PtGDecoder();
+	private static volatile PtGDecoder instance = new PtGDecoder();
 
 	private PtGDecoder() {
 
 	}
 
-	public static PtGDecoder getInstance() {
+	public static synchronized PtGDecoder getInstance() {
 
 		return instance;
 	}

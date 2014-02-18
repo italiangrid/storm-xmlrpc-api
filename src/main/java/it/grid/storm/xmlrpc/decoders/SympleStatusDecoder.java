@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class SympleStatusDecoder implements OutputDecoder {
 
-	private static final SympleStatusDecoder instance = new SympleStatusDecoder();
+	private static volatile SympleStatusDecoder instance = new SympleStatusDecoder();
 
 	private SympleStatusDecoder() {
 
 	}
 
-	public static SympleStatusDecoder getInstance() {
+	public static synchronized SympleStatusDecoder getInstance() {
 
 		return instance;
 	}

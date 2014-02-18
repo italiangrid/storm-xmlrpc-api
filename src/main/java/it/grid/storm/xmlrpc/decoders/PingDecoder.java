@@ -35,13 +35,13 @@ public class PingDecoder implements OutputDecoder {
 	public static final String BE_VERSION_KEY = "BE-Version";
 	public static final String BE_OS_KEY = "BE-OS-Distribution";
 
-	private static final PingDecoder instance = new PingDecoder();
+	private static volatile PingDecoder instance = new PingDecoder();
 
 	private PingDecoder() {
 
 	}
 
-	public static PingDecoder getInstance() {
+	public static synchronized PingDecoder getInstance() {
 
 		return instance;
 	}
