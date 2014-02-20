@@ -8,13 +8,13 @@ import java.util.Map;
 
 public class PtPDecoder implements OutputDecoder {
 
-	private static final PtPDecoder instance = new PtPDecoder();
+	private static volatile PtPDecoder instance = new PtPDecoder();
 
 	private PtPDecoder() {
 
 	}
 
-	public static PtPDecoder getInstance() {
+	public static synchronized PtPDecoder getInstance() {
 
 		return instance;
 	}

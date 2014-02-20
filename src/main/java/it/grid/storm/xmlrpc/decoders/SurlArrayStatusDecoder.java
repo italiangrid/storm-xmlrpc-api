@@ -13,13 +13,13 @@ import java.util.Map;
  */
 public class SurlArrayStatusDecoder implements OutputDecoder {
 
-	private static final SurlArrayStatusDecoder instance = new SurlArrayStatusDecoder();
+	private static volatile SurlArrayStatusDecoder instance = new SurlArrayStatusDecoder();
 
 	private SurlArrayStatusDecoder() {
 
 	}
 
-	public static SurlArrayStatusDecoder getInstance() {
+	public static synchronized SurlArrayStatusDecoder getInstance() {
 
 		return instance;
 	}

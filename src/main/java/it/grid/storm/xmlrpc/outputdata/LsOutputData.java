@@ -23,24 +23,20 @@ public class LsOutputData extends RequestOutputData implements OutputData {
 
 	private final ArrayList<SurlInfo> infos;
 	private final TRequestToken token;
-	private final boolean hasInfos;
 
 	LsOutputData(Builder builder) {
 
 		super(builder.status);
+		infos = new ArrayList<SurlInfo>();
 		if (builder.infos != null) {
-			infos = builder.infos;
-			hasInfos = true;
-		} else {
-			infos = new ArrayList<SurlInfo>();
-			hasInfos = false;
+			infos.addAll(builder.infos);
 		}
 		token = builder.token;
 	}
 
 	public boolean hasInfos() {
 
-		return hasInfos;
+		return !infos.isEmpty();
 	}
 
 	/**
@@ -53,7 +49,7 @@ public class LsOutputData extends RequestOutputData implements OutputData {
 
 	public boolean hasToken() {
 
-		return this.token != null;
+		return token != null;
 	}
 
 	/**
@@ -655,7 +651,7 @@ public class LsOutputData extends RequestOutputData implements OutputData {
 		public Builder infos(ArrayList<SurlInfo> infos)
 			throws IllegalArgumentException {
 
-			if (infos == null || infos.isEmpty()) {
+			if (infos == null) {
 				throw new IllegalArgumentException(
 					"Unable to feed the builder, invalid arguments: infos=" + infos);
 			}
