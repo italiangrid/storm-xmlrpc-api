@@ -6,18 +6,17 @@ pipeline {
 	timeout(time: 1, unit: 'HOURS')
   }
 
-  triggers { cron('@daily') }
-
   stages {
-	stage('prepare'){
-	  steps {
-	    checkout scm
-	  }
-	}
-
 	stage('deploy') { 
       steps { 
-        sh "mvn clean -U -B deploy"
+        container('maven-runner'){
+          sh "mvn clean -U -B deploy"
+        }
+      }
+    }
+    
+    stage('result'){
+      steps {
         script { 
           currentBuild.result = 'SUCCESS' 
         }
